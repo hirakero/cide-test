@@ -2,9 +2,9 @@ name: Laravel CI
 
 on:
   push:
-    branches: [staging, main]
+    branches: [main]
   pull_request:
-    branches: [develop]
+    branches: [develop, staging, main]
   workflow_dispatch:
 
 jobs:

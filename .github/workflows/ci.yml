@@ -5,10 +5,14 @@ on:
     branches: [main]
   pull_request:
     branches: [develop, staging, main]
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ["8.5", "8.4"]
 
     services:
       mysql:
@@ -30,7 +34,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.4"
+          php-version: ${{ matrix.php-version }}
 
       - name: Cache Composer dependencies
         uses: actions/cache@v5
@@ -67,5 +71,5 @@ jobs:
           DB_PORT: 3306
           DB_DATABASE: laravel
           DB_USERNAME: root
-          DB_PASSWORD: root
+          DB_PASSWORD: root 
         run: php artisan test
